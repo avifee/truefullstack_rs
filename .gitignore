@@ -1,0 +1,19 @@
+.std
+
+# prj-spec dirs
+# <https://github.com/numtide/prj-spec>
+.bin
+.cache
+.config
+.data
+.run
+
+# nixago: ignore-linked-files
+/.cargo/config
+/lefthook.yml
+/.conform.yaml
+/treefmt.toml
+
+# Added by cargo
+
+/target

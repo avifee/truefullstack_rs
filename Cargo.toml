@@ -1,0 +1,10 @@
+[package]
+edition = "2021"
+name = "truefullstack_rs"
+version = "0.1.0"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
