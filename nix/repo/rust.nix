@@ -12,22 +12,10 @@
 in {
   inherit target-triple;
   toolchain = combine (
+    # rust-src and rust-std are just there to suppress rust-analyzer errors about
+    # them missing in the sysroot, we're not actually using them and I can't
+    # be arsed to find another way to make it shut up
     builtins.attrValues {inherit (target) rust-std;}
-    ++ builtins.attrValues {inherit (latest) cargo rustc rustfmt;}
-    ++ [fenix.packages.rust-analyzer]
+    ++ builtins.attrValues {inherit (latest) cargo rustc rustfmt rust-src clippy;}
   );
 }
-# # add rust-analyzer from nightly, if not present
-# if rustPkgs ? rust-analyzer
-# then rustPkgs
-# else
-#   rustPkgs
-#   // {
-#     inherit (fenix.packages) rust-analyzer;
-#     toolchain = fenix.packages.combine [
-#       (builtins.attrValues rustPkgs)
-#       fenix.packages.rust-analyzer
-#       nixpkgs.cargo-nextest
-#     ];
-#   }
-
