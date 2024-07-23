@@ -23,7 +23,7 @@ in {
   # };
 
   cargo = mkNixago {
-    output = ".cargo/config";
+    output = "config.toml";
     format = "toml";
     data.build.target = cell.rust.target-triple;
   };

@@ -9,6 +9,7 @@
 .run
 
 # nixago: ignore-linked-files
+/config.toml
 /.cargo/config
 /lefthook.yml
 /.conform.yaml
