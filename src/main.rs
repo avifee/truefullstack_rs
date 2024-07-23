@@ -3,11 +3,13 @@
 
 use core::{hint, panic::PanicInfo};
 
+use self::sys::exit;
+
+pub mod sys;
+
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    loop {
-        hint::spin_loop();
-    }
+    exit(1)
 }
 
 #[panic_handler]
