@@ -8,11 +8,11 @@
   l = nixpkgs.lib // builtins // lib;
 
   dev = lib.dev.mkShell {
-    packages = builtins.attrValues {inherit (nixpkgs) pkg-config nil;};
+    packages = builtins.attrValues {inherit (nixpkgs) pkg-config nil cargo-nextest;};
     language.rust = {
-      packageSet = cell.rust;
+      packageSet = cell.pkgs;
       enableDefaultToolchain = true;
-      tools = ["toolchain"]; # fenix collates them all in a convenience derivation
+      tools = ["rust"];
     };
 
     devshell.startup.link-cargo-home = {
@@ -20,7 +20,7 @@
       text = ''
         # ensure CARGO_HOME is populated
         mkdir -p "$PRJ_DATA_DIR/cargo"
-        ln -snf $(ls -d ${cell.rust.toolchain}/*) "$PRJ_DATA_DIR/cargo"
+        ln -snf $(ls -d ${cell.pkgs.rust}/*) "$PRJ_DATA_DIR/cargo"
       '';
     };
 
@@ -41,7 +41,7 @@
         # accessing via toolchain doesn't fail if it's not there
         # and rust-analyzer is graceful if it's not set correctly:
         # https://github.com/rust-lang/rust-analyzer/blob/7f1234492e3164f9688027278df7e915bc1d919c/crates/project-model/src/sysroot.rs#L196-L211
-        value = "${cell.rust.toolchain}/lib/rustlib/src/rust/library";
+        value = "${cell.pkgs.rust}/lib/rustlib/src/rust/library";
       }
     ];
     imports = [
@@ -54,7 +54,7 @@
       rustCmds =
         l.map (name: {
           inherit name;
-          package = cell.rust.toolchain; # has all bins
+          package = cell.pkgs.rust; # has all bins
           category = "rust dev";
           # fenix doesn't include package descriptions, so pull those out of their equivalents in nixpkgs
           help = nixpkgs.${name}.meta.description;

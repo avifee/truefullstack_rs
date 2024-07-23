@@ -41,7 +41,7 @@
         (installables "packages")
         # Contribution Environment
         (devshells "shells")
-        (pkgs "rust")
+        (pkgs "pkgs")
         (nixago "configs")
       ];
     } {

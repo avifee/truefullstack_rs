@@ -23,9 +23,12 @@ in {
   # };
 
   cargo = mkNixago {
-    output = "config.toml";
+    output = ".cargo/config.toml";
     format = "toml";
-    data.build.target = cell.rust.target-triple;
+    data.build = {
+      rustflags = ["-Clink-args=-nostdlib"];
+      target = cell.pkgs.target-triple;
+    };
   };
 
   # Tool Homepage: https://numtide.github.io/treefmt/
