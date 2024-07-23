@@ -14,26 +14,29 @@
   "runArgs": ["--security-opt", "label=disable"],
   "containerEnv": {
     // extensions to preload before other extensions
-    "PRELOAD_EXTENSIONS": "arrterian.nix-env-selector"
+    "PRELOAD_EXTENSIONS": "mkhl.direnv"
   },
-  "mounts": ["source=ai-rs_devcontainer_nix-cache,target=/nix,type=volume"],
+  "mounts": [
+    "source=true-fullstack-rs_devcontainer_nix-cache,target=/nix,type=volume"
+  ],
   // disable command overriding and updating remote user ID
   "overrideCommand": false,
   "userEnvProbe": "loginShell",
   "updateRemoteUserUID": false,
-  // build development environment on creation, make sure you already have shell.nix
-  "onCreateCommand": "nix develop",
+  // the `-c true` is there so that it exits immediately and
+  // doesn't drop you into an interactive shell
+  "onCreateCommand": "nix develop -c true",
   // Add the IDs of extensions you want installed when the container is created.
   "customizations": {
     "vscode": {
       "extensions": [
-        "arrterian.nix-env-selector",
         "fsevenm.run-it-on",
         "jnoortheen.nix-ide",
         "tamasfe.even-better-toml",
         "rust-lang.rust-analyzer",
         "JScearcy.rust-doc-viewer",
-        "ZhangYue.rust-mod-generator"
+        "ZhangYue.rust-mod-generator",
+        "mkhl.direnv"
       ]
     }
   },
