@@ -8,9 +8,7 @@
   l = nixpkgs.lib // builtins // lib;
 
   dev = lib.dev.mkShell {
-    packages = [
-      nixpkgs.pkg-config
-    ];
+    packages = builtins.attrValues {inherit (nixpkgs) pkg-config nil;};
     language.rust = {
       packageSet = cell.rust;
       enableDefaultToolchain = true;
