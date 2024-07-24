@@ -1,5 +1,7 @@
 .std
 
+/result
+
 # prj-spec dirs
 # <https://github.com/numtide/prj-spec>
 .bin
@@ -9,7 +11,6 @@
 .run
 
 # nixago: ignore-linked-files
-/.cargo/config.toml
 /lefthook.yml
 /.conform.yaml
 /treefmt.toml

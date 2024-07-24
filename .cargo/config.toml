@@ -1,0 +1,3 @@
+[build]
+rustflags = ["-Clink-args=-nostdlib"]
+target = "x86_64-unknown-none"

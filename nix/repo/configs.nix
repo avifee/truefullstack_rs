@@ -22,15 +22,6 @@ in {
   #   # data = {};
   # };
 
-  cargo = mkNixago {
-    output = ".cargo/config.toml";
-    format = "toml";
-    data.build = {
-      rustflags = ["-Clink-args=-nostdlib"];
-      target = cell.pkgs.target-triple;
-    };
-  };
-
   # Tool Homepage: https://numtide.github.io/treefmt/
   treefmt = mkNixago lib.cfg.treefmt {
     # see defaults at https://github.com/divnix/std/blob/5ce7c9411337af3cb299bc9b6cc0dc88f4c1ee0e/src/data/configs/treefmt.nix
