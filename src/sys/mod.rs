@@ -1,3 +1,5 @@
+//TODO: maybe abstract syscalls into special syscall functions
+
 use core::{arch::asm, hint};
 
 /// Execute the `exit(2)` syscall with status code defined by the `status` argument.
@@ -34,4 +36,28 @@ pub unsafe fn _exit(status: usize) -> ! {
     );
 
     hint::unreachable_unchecked()
+}
+
+//TODO: set error variants
+pub fn write(fd: usize, data: &[u8]) -> Result<usize, ()> {
+    let mut ret: isize;
+    unsafe {
+        let ptr = data.as_ptr();
+        let len = data.len();
+        asm!(
+            "syscall",
+            inlateout("rax") 1usize => ret, //1 is write()
+            in("rdi") fd,
+            in("rsi") ptr,
+            in("rdx") len,
+            out("rcx") _, // rcx is used to store old rip
+            out("r11") _, // r11 is used to store old rflags
+            options(nostack, preserves_flags)
+        );
+    }
+    if ret == -1 {
+        Err(())
+    } else {
+        Ok(unsafe { ret.try_into().unwrap_unchecked() }) //Safety: it has been checked to be positive
+    }
 }
