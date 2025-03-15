@@ -2,6 +2,8 @@
 
 use core::{arch::asm, hint};
 
+// pub mod alloc;
+
 /// Execute the `exit(2)` syscall with status code defined by the `status` argument.
 /// Refer to the [original docs](https://manpages.debian.org/unstable/manpages-dev/exit.2.en.html) for details
 #[inline]
